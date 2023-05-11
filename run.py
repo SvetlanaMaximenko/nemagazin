@@ -14,11 +14,6 @@ if __name__ == "__main__":
     service = ShopService(storage=memory_storage)
 
     menu.add_menu_category(
-        name="Товары",
-        callback=service.display_products,
-        login_required=False,
-    )
-    menu.add_menu_category(
         name="Войти",
         callback=service.login,
         login_required=False,
@@ -42,6 +37,11 @@ if __name__ == "__main__":
         name="Профиль",
         callback=service.profile,
         login_required=True,
+    )
+    menu.add_menu_category(
+        name="Товары",
+        callback=service.display_products,
+        login_required=False,
     )
 
     while True:
