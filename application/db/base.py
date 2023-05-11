@@ -8,6 +8,13 @@ class SessionManager:
         self._session = None
 
     def init_engine(self, dsn: str):
+        """
+        Эта функция инициализирует механизм базы данных и сеанс, используя заданный DSN.
+
+        :param dsn: dsn означает «Имя источника данных» и представляет собой строку, содержащую информацию,
+         необходимую для подключения к базе данных. Обычно он включает тип базы данных, хост, порт, имя базы данных
+         и учетные данные для аутентификации
+        """
         self._engine = create_engine(dsn)
         self._session = sessionmaker(
             bind=self._engine,
@@ -21,6 +28,9 @@ class SessionManager:
         return getattr(self._session, item)
 
     def create_tables(self):
+        """
+        Метод создает таблицы в базе данных.
+        """
         BaseModel.metadata.create_all(bind=self._engine)
 
 
@@ -28,6 +38,11 @@ session = SessionManager()
 
 
 class BaseModel(DeclarativeBase):
+    """
+    Приведенный выше класс предоставляет методы для создания, обновления, фильтрации и извлечения экземпляров модели
+    SQLAlchemy из базы данных.
+    """
+
     @classmethod
     def get(cls, **kwargs):
         """

@@ -2,6 +2,9 @@ from .base import AbstractStorage
 
 
 class MemoryStorage(AbstractStorage):
+    """
+    Класс MemoryStorage — это реализация интерфейса AbstractStorage, который хранит элементы в памяти.
+    """
 
     def __init__(self):
         self._items = {}
