@@ -18,7 +18,11 @@ if __name__ == "__main__":
         callback=service.display_products,
         login_required=False,
     )
-    menu.add_menu_category(name="Войти", callback=service.login, login_required=False)
+    menu.add_menu_category(
+        name="Войти",
+        callback=service.login,
+        login_required=False,
+    )
     menu.add_menu_category(
         name="Зарегистрироваться",
         callback=service.register,
