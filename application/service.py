@@ -1,6 +1,8 @@
 from datetime import datetime
 
 import tabulate
+import sys
+
 
 from application.storage import AbstractStorage
 from .models import Ticket, Product, User, Orders
@@ -10,6 +12,10 @@ class ShopService:
     def __init__(self, storage: AbstractStorage):
         self._storage = storage
         self._user: User = None
+
+    @staticmethod
+    def exit_prog() -> None:
+        sys.exit()
 
     @staticmethod
     def display_products() -> None:
@@ -88,6 +94,12 @@ class ShopService:
             break
 
         self._login_user(user)
+        self.write_current_user(username)
+
+    @staticmethod
+    def write_current_user(data: str) -> None:
+        with open('user_login.txt', 'w') as file:
+            file.write(data)
 
     def _login_user(self, user: User) -> None:
         """
@@ -161,6 +173,11 @@ class ShopService:
         self._update_user(self._user)
 
         print(f"Спасибо, что купили {product.name}")
+
+    def change_profile(self) -> None:
+        print(f" Выход из профиля: {self._user.username}")
+        self.login()
+        print(f" Ваш профиль: \n {self._user.username}\n Points: {self._user.points}")
 
     def profile(self):
         """

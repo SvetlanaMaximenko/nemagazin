@@ -3,9 +3,16 @@ from sqlalchemy.orm import sessionmaker, DeclarativeBase
 
 
 class SessionManager:
+
+    __instance = None
+
     def __init__(self):
-        self._engine = None
-        self._session = None
+        if not SessionManager.__instance:
+            print(" __init__ method called..")
+            self._engine = None
+            self._session = None
+        else:
+            print("Instance already created:", self.get_instance())
 
     def init_engine(self, dsn: str):
         """
@@ -20,6 +27,12 @@ class SessionManager:
             bind=self._engine,
             expire_on_commit=False,
         )
+
+    @classmethod
+    def get_instance(cls):
+        if not cls.__instance:
+            cls.__instance = SessionManager()
+        return cls.__instance
 
     def __call__(self, *args, **kwargs):
         return self._session(*args, **kwargs)

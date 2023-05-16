@@ -16,7 +16,7 @@ class UserMenu:
         """
         return self._storage.get("user")
 
-    def add_menu_category(self, name: str, callback: Callable, login_required: bool):
+    def add_menu_category(self, name: str, callback: Callable, login_required: int):
         """
         Эта функция добавляет категорию меню в список с именем, функцией обратного вызова и флагом, указывающим,
         требуется ли вход в систему.
@@ -42,9 +42,12 @@ class UserMenu:
         момент не вошел в систему.
         """
         for i, cat in enumerate(self._menu_list, 1):
-            if cat["login_required"] and self.get_current_user() is None:
-                continue
-            print(f" {i}. {cat['name']}")
+            if (cat["login_required"]) == 0:
+                print(f" {i}. {cat['name']}")
+            if self.get_current_user() and cat["login_required"] == 2:
+                print(f" {i}. {cat['name']}")
+            elif self.get_current_user() is None and cat["login_required"] == 1:
+                print(f" {i}. {cat['name']}")
 
     def handler(self):
         """
